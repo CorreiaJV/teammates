@@ -34,8 +34,12 @@ public class TimeHelperTest extends BaseTestCase {
         instant = LocalDateTime.of(2015, Month.NOVEMBER, 30, 16, 0).atZone(ZoneId.of(zoneId)).toInstant();
         assertEquals("Mon, 30 Nov 2015, 04:00 PM SGT", TimeHelper.formatInstant(instant, zoneId, DATETIME_DISPLAY_FORMAT));
 
-        instant = LocalDateTime.of(2015, Month.NOVEMBER, 30, 4, 0).atZone(ZoneId.of(zoneId)).toInstant();
-        assertEquals("Mon, 30 Nov 2015, 04:00 AM SGT", TimeHelper.formatInstant(instant, zoneId, DATETIME_DISPLAY_FORMAT));
+        zoneId = "Brazil/DeNoronha";
+        instant = LocalDateTime.of(2022, Month.JANUARY, 15, 12, 33).atZone(ZoneId.of(zoneId)).toInstant();
+        assertEquals("Sat, 15 Jan 2022, 12:33 PM FNT", TimeHelper.formatInstant(instant, zoneId, DATETIME_DISPLAY_FORMAT));
+
+        instant = LocalDateTime.of(2022, Month.JANUARY, 15, 4, 44).atZone(ZoneId.of(zoneId)).toInstant();
+        assertEquals("Sat, 15 Jan 2022, 04:44 AM FNT", TimeHelper.formatInstant(instant, zoneId, DATETIME_DISPLAY_FORMAT));    
     }
 
     @Test
