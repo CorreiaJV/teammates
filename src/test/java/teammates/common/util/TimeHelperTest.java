@@ -27,15 +27,52 @@ public class TimeHelperTest extends BaseTestCase {
     @Test
     public void testFormatDateTimeForDisplay() {
         String zoneId = "UTC";
-        Instant instant = LocalDateTime.of(2015, Month.NOVEMBER, 30, 12, 0).atZone(ZoneId.of(zoneId)).toInstant();
-        assertEquals("Mon, 30 Nov 2015, 12:00 NOON UTC", TimeHelper.formatInstant(instant, zoneId, DATETIME_DISPLAY_FORMAT));
+        Instant instant = LocalDateTime.of(2022, Month.JANUARY, 15, 12, 0).atZone(ZoneId.of(zoneId)).toInstant();
+        assertEquals("Sat, 15 Jan 2022, 12:00 NOON UTC", TimeHelper.formatInstant(instant, zoneId, DATETIME_DISPLAY_FORMAT));
 
-        zoneId = "Asia/Singapore";
-        instant = LocalDateTime.of(2015, Month.NOVEMBER, 30, 16, 0).atZone(ZoneId.of(zoneId)).toInstant();
-        assertEquals("Mon, 30 Nov 2015, 04:00 PM SGT", TimeHelper.formatInstant(instant, zoneId, DATETIME_DISPLAY_FORMAT));
+        zoneId = "Brazil/DeNoronha";
+        instant = LocalDateTime.of(2022, Month.JANUARY, 15, 12, 33).atZone(ZoneId.of(zoneId)).toInstant();
+        assertEquals("Sat, 15 Jan 2022, 12:33 PM FNT", TimeHelper.formatInstant(instant, zoneId, DATETIME_DISPLAY_FORMAT));
 
-        instant = LocalDateTime.of(2015, Month.NOVEMBER, 30, 4, 0).atZone(ZoneId.of(zoneId)).toInstant();
-        assertEquals("Mon, 30 Nov 2015, 04:00 AM SGT", TimeHelper.formatInstant(instant, zoneId, DATETIME_DISPLAY_FORMAT));
+        zoneId = "Europe/Warsaw";
+        instant = LocalDateTime.of(2022, Month.JANUARY, 15, 16, 0).atZone(ZoneId.of(zoneId)).toInstant();
+        assertEquals("Sat, 15 Jan 2022, 04:00 PM CET", TimeHelper.formatInstant(instant, zoneId, DATETIME_DISPLAY_FORMAT));
+
+        zoneId = "GMT+9";
+        instant = LocalDateTime.of(2022, Month.JANUARY, 15, 4, 44).atZone(ZoneId.of(zoneId)).toInstant();
+        assertEquals("Sat, 15 Jan 2022, 04:44 AM GMT+09:00", TimeHelper.formatInstant(instant, zoneId, DATETIME_DISPLAY_FORMAT));        
+    }
+
+    @Test
+     public void testFormatDateTimeNullValues() {
+        String zoneId = null;
+        Instant instant = null;
+        assertEquals("", TimeHelper.formatInstant(instant, zoneId, null));
+
+        zoneId = "UTC";
+        instant = null;
+        assertEquals("", TimeHelper.formatInstant(instant, zoneId, DATETIME_DISPLAY_FORMAT));
+
+        zoneId = "GMT";
+        instant = null;
+        assertEquals("", TimeHelper.formatInstant(instant, zoneId, null));
+
+        zoneId = null;
+        instant = null;
+        assertEquals("", TimeHelper.formatInstant(instant, zoneId, DATETIME_DISPLAY_FORMAT));
+
+        zoneId = null;
+        instant = LocalDateTime.of(2022, Month.JANUARY, 15, 17, 10).atZone(ZoneId.of("UTC")).toInstant();;
+        assertEquals("", TimeHelper.formatInstant(instant, zoneId, null));
+
+        zoneId = "UTC";
+        instant = LocalDateTime.of(2015, Month.NOVEMBER, 30, 12, 0).atZone(ZoneId.of(zoneId)).toInstant();;
+        assertEquals("", TimeHelper.formatInstant(instant, zoneId, null));
+
+        zoneId = null;
+        instant = LocalDateTime.of(2015, Month.NOVEMBER, 30, 12, 0).atZone(ZoneId.of("UTC")).toInstant();;
+        assertEquals("", TimeHelper.formatInstant(instant, zoneId, DATETIME_DISPLAY_FORMAT));
+        
     }
 
     @Test
